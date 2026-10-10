@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111111">
+  <meta name="description" content="Arsip puisi, surat, dan hal-hal yang belum selesai diterjemahkan.">
+  <title>Arsip Jiwa — Puisi & Surat</title>
+  <style>
+    :root {
+      --bg: #101010; --panel: #171717; --panel2: #1e1e1e;
+      --text: #eeeae4; --muted: #aaa49b; --line: #353535;
+      --accent: #c8b9a6; --accent2: #8e8172; --max: 1040px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: Georgia, "Times New Roman", serif; line-height: 1.75;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    .wrap { width: min(100% - 40px, var(--max)); margin: auto; }
+    .nav {
+      display:flex; align-items:center; justify-content:space-between; gap:20px;
+      padding: 22px 0; border-bottom: 1px solid var(--line);
+      font-family: Arial, sans-serif; font-size: .78rem; letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .brand { color: var(--accent); letter-spacing: .2em; }
+    .navlinks { display:flex; gap:20px; flex-wrap:wrap; }
+    .navlinks a { color: var(--muted); }
+    .navlinks a:hover, .navlinks a:focus { color: var(--text); }
+    .hero { min-height: 75vh; display:flex; flex-direction:column; justify-content:center; padding: 90px 0 100px; }
+    .eyebrow { font: .72rem/1.5 Arial, sans-serif; color: var(--accent); letter-spacing:.22em; text-transform:uppercase; }
+    h1 { font-size: clamp(2.8rem, 8vw, 6.5rem); line-height: .99; font-weight:400; letter-spacing:-.055em; max-width:850px; margin: 24px 0; }
+    .hero p { max-width: 580px; color: var(--muted); font-size: clamp(1.05rem, 2vw, 1.25rem); }
+    .actions { display:flex; gap:12px; flex-wrap:wrap; margin-top:25px; }
+    .btn { display:inline-flex; align-items:center; justify-content:center; padding:12px 17px; border:1px solid var(--line); background:transparent; color:var(--text); font: .8rem Arial,sans-serif; letter-spacing:.06em; }
+    .btn.primary { background:var(--accent); color:#171513; border-color:var(--accent); }
+    .btn:hover { border-color:var(--accent); }
+    section { padding: 75px 0; border-top:1px solid var(--line); }
+    .section-head { display:flex; align-items:end; justify-content:space-between; gap:24px; margin-bottom:30px; }
+    h2 { font-size: clamp(2rem, 4vw, 3.5rem); line-height:1.1; font-weight:400; letter-spacing:-.035em; margin:8px 0 0; }
+    .section-head p { color:var(--muted); max-width:400px; margin:0; font-size:.95rem; }
+    .grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+    .card { background:var(--panel); border:1px solid var(--line); padding:25px; min-height:230px; display:flex; flex-direction:column; transition:transform .2s,border-color .2s; }
+    .card:hover { transform:translateY(-3px); border-color:var(--accent2); }
+    .card .tag { font: .68rem Arial,sans-serif; text-transform:uppercase; letter-spacing:.16em; color:var(--accent); }
+    .card h3 { font-size:1.65rem; line-height:1.2; font-weight:400; margin:18px 0 12px; }
+    .card p { color:var(--muted); margin:0 0 24px; }
+    .card .read { margin-top:auto; font: .75rem Arial,sans-serif; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); }
+    .letter-panel { background:var(--panel); border:1px solid var(--line); padding:clamp(25px,6vw,60px); }
+    .letter-panel .letter-text { max-width:700px; margin:25px auto 0; white-space:pre-line; color:#d7d1c9; font-size:1.08rem; }
+    .letter-panel h3 { max-width:700px; margin:0 auto; font-size:clamp(2rem,4vw,3.4rem); font-weight:400; line-height:1.15; }
+    .notice { max-width:700px; margin:22px auto 0; padding-top:18px; border-top:1px solid var(--line); color:var(--muted); font: .78rem/1.6 Arial,sans-serif; }
+    .about { display:grid; grid-template-columns:1fr 1fr; gap:45px; align-items:start; }
+    .about p { color:var(--muted); margin-top:0; }
+    footer { padding:35px 0 50px; color:var(--muted); font: .75rem/1.7 Arial,sans-serif; }
+    .footerline { display:flex; justify-content:space-between; gap:20px; border-top:1px solid var(--line); padding-top:20px; }
+    .music-control { position:fixed; right:18px; bottom:18px; z-index:5; box-shadow:0 5px 30px #0008; }
+    .modal { position:fixed; inset:0; z-index:10; background:#000d; display:none; overflow:auto; padding:30px 18px; }
+    .modal.open { display:block; }
+    .modal-inner { max-width:760px; margin:5vh auto; background:var(--panel); border:1px solid var(--line); padding:clamp(24px,5vw,55px); position:relative; }
+    .close { position:absolute; right:15px; top:15px; background:none; border:1px solid var(--line); color:var(--text); padding:5px 10px; }
+    .modal h2 { margin:15px 35px 25px 0; }
+    .modal .body { white-space:pre-line; font-size:1.08rem; color:#d7d1c9; }
+    .private-lock { display:inline-block; border:1px solid var(--line); padding:4px 8px; font: .68rem Arial,sans-serif; letter-spacing:.1em; color:var(--accent); }
+    @media (max-width:680px) {
+      .wrap { width:min(100% - 28px,var(--max)); }
+      .nav { align-items:flex-start; flex-direction:column; }
+      .navlinks { gap:14px; }
+      .hero { min-height:68vh; padding:70px 0; }
+      .grid, .about { grid-template-columns:1fr; }
+      .section-head { align-items:flex-start; flex-direction:column; }
+      .card { min-height:190px; }
+      .music-control { right:12px; bottom:12px; }
+      .footerline { flex-direction:column; }
+    }
+    @media (prefers-reduced-motion: reduce) { html{scroll-behavior:auto} *,*::before,*::after{transition:none!important} }
+  </style>
+</head>
+<body>
+  <header class="wrap">
+    <nav class="nav" aria-label="Navigasi utama">
+      <a class="brand" href="#beranda">Arsip Jiwa</a>
+      <div class="navlinks">
+        <a href="#puisi">Puisi</a>
+        <a href="#surat">Surat</a>
+        <a href="#tentang">Tentang</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div class="wrap">
+      <section class="hero" id="beranda" style="border-top:0">
+        <div class="eyebrow">Catatan tentang hal-hal yang tak selesai diterjemahkan</div>
+        <h1>Ada yang tak selesai <em>diterjemahkan.</em></h1>
+        <p>Tempat segala sesuatu yang tak sanggup diucapkan, akhirnya menemukan bahasa. Sebuah arsip kecil tentang cinta, kehilangan, pertumbuhan, dan segala yang hidup diam-diam di dalam jiwa.</p>
+        <div class="actions">
+          <a class="btn primary" href="#puisi">Mulai membaca ↘</a>
+          <a class="btn" href="#surat">Buka surat</a>
+        </div>
+      </section>
+    </div>
+
+    <section id="puisi">
+      <div class="wrap">
+        <div class="section-head">
+          <div><div class="eyebrow">01 / Kumpulan tulisan</div><h2>Puisi & fragmen</h2></div>
+          <p>Beberapa halaman dari hal-hal yang tak selalu berhasil dijelaskan oleh bahasa.</p>
+        </div>
+        <div class="grid" id="poem-grid"></div>
+      </div>
+    </section>
+
+    <section id="surat">
+      <div class="wrap">
+        <div class="section-head">
+          <div><div class="eyebrow">02 / Untuk seseorang</div><h2>Surat yang tinggal</h2></div>
+          <p>Sebuah ruang untuk menaruh kata-kata yang lebih personal, lebih pelan, dan lebih jujur.</p>
+        </div>
+        <article class="letter-panel">
+          <div class="eyebrow">Surat tanpa terburu-buru</div>
+          <h3>Untuk kamu, yang tak pernah selesai kupelajari.</h3>
+          <div class="letter-text">Aku tidak ingin menjadikanmu teka-teki yang harus kuselesaikan. Aku ingin mengenalmu sebagai semesta yang terus bertumbuh—dengan musim-musim yang belum kupahami, bintang-bintang yang belum kutemukan namanya, dan jalan-jalan yang hanya bisa kaupilih sendiri.
+
+Aku tidak selalu akan memiliki kalimat yang tepat. Tetapi aku ingin belajar mendengarkan, meminta maaf ketika aku keliru, dan menunjukkan kasih sayang bukan hanya melalui tulisan, melainkan juga melalui caraku memperlakukanmu.
+
+Jika suatu hari dunia terasa terlalu bising, semoga kau tetap menemukan tempat untuk bernapas. Dan jika tempat itu bukan aku, semoga kau tetap baik-baik saja. Sebab doaku untukmu tidak seharusnya menjadi utang yang harus kaubayar dengan tinggal.</div>
+          <div class="notice"><strong>Catatan:</strong> bagian ini tampil untuk siapa pun yang membuka website. Jangan masukkan informasi pribadi atau rahasia di sini jika website diterbitkan secara publik. Untuk surat yang benar-benar privat, gunakan autentikasi atau layanan yang memang mendukung akses terbatas.</div>
+        </article>
+      </div>
+    </section>
+
+    <section id="tentang">
+      <div class="wrap about">
+        <div><div class="eyebrow">03 / Tentang arsip ini</div><h2>Ditulis untuk mengingat, bukan untuk membekukan.</h2></div>
+        <div>
+          <p>Arsip Jiwa adalah ruang kecil untuk menyimpan puisi, surat, dan pikiran yang tumbuh dari pengalaman manusia. Tulisan-tulisan di sini boleh berubah seiring waktu, seperti orang yang menuliskannya.</p>
+          <p>Nama, puisi, dan identitas situs ini bisa kamu ubah. Anggap halaman ini sebagai awal: sebuah meja kosong, sebuah pena, dan cukup ruang untuk jujur.</p>
+          <a class="btn" href="#puisi">Kembali membaca ↑</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footerline">
+      <span>© <span id="year"></span> Arsip Jiwa</span>
+      <span>Ditulis dengan hati, disimpan dalam kata-kata.</span>
+    </div>
+  </footer>
+
+  <button class="btn music-control" id="music-toggle" type="button" aria-pressed="false">♫ Nyalakan suasana</button>
+
+  <div class="modal" id="poem-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-inner">
+      <button class="close" id="modal-close" type="button" aria-label="Tutup puisi">Tutup ✕</button>
+      <div class="eyebrow" id="modal-tag">Puisi</div>
+      <h2 id="modal-title"></h2>
+      <div class="body" id="modal-body"></div>
+    </div>
+  </div>
+
+  <script>
+    // Ubah atau tambahkan puisi di daftar ini.
+    const poems = [
+      {
+        tag: "Tentang jiwa",
+        title: "Jiwa yang mengenali jiwa",
+        excerpt: "Ada pertemuan yang terasa seperti pulang, meski kita belum pernah memiliki rumah yang sama.",
+        body: `Aku tidak tahu apakah jiwa memiliki ingatan sebelum pertemuan, atau apakah manusia hanya menciptakan bahasa yang indah untuk menjelaskan sesuatu yang terlalu besar bagi logika.
+
+Namun sejak mengenalmu, aku memahami bagaimana sebuah kehadiran dapat terasa seperti kepulangan. Kau tidak melengkapiku; kau memperkenalkanku kepada bagian-bagian diriku yang belum sempat kukenal.
+
+Barangkali cinta bukan menemukan seseorang yang membuat kita utuh, melainkan bertemu seseorang yang membuat kita berani membuka jendela-jendela yang lama tertutup.`
+      },
+      {
+        tag: "Tentang bahasa",
+        title: "Bahasa yang menyerah",
+        excerpt: "Aku punya begitu banyak kata, tetapi selalu merasa bahasa terlalu kecil ketika sampai kepadamu.",
+        body: `Aku mengenal cara hujan menjelma kesedihan, cara senja menjadi perpisahan, dan cara laut menyimpan kedalaman tanpa memperlihatkan dasarnya.
+
+Namun ketika hendak menuliskanmu, seluruh perumpamaan itu terasa seperti pakaian yang salah ukuran.
+
+Mungkin aku hanya sedang berdiri di hadapan sesuatu yang terlalu luas untuk kutaklukkan dengan bahasa. Dan untuk pertama kalinya, aku tidak ingin menguasai sesuatu dengan kata-kata.
+
+Aku ingin membiarkanmu menjadi keindahan yang tidak perlu selesai kuterjemahkan agar tetap bisa kucintai.`
+      },
+      {
+        tag: "Tentang doa",
+        title: "Doa yang tak menjadi utang",
+        excerpt: "Aku berharap hidup memperlakukanmu dengan lembut, tanpa meminta namaku disebut dalam kebahagiaanmu.",
+        body: `Ada doa-doa yang tidak pernah kuceritakan kepadamu. Aku berharap hidup memperlakukanmu dengan lembut, bahkan pada hari-hari ketika aku tidak berada di sisimu.
+
+Semoga kau tetap menemukan alasan untuk bangun pada pagi hari. Semoga ada tempat yang membuatmu merasa aman untuk meletakkan segala sesuatu yang selama ini kauangkat sendirian.
+
+Aku tidak ingin kebaikan yang kuharapkan untukmu menjadi utang yang harus kaubayar dengan cinta. Aku hanya ingin kau baik-baik saja, sungguh-sungguh baik-baik saja.`
+      },
+      {
+        tag: "Tentang waktu",
+        title: "Yang tidak harus abadi",
+        excerpt: "Sesuatu tidak harus abadi agar layak dicintai dengan sepenuh hati.",
+        body: `Aku tidak dapat menghentikan waktu, tetapi aku ingin belajar memperhatikan hal-hal kecil sebelum berubah menjadi kenangan.
+
+Bagaimana suaramu ketika bersemangat. Bagaimana tawamu muncul tanpa direncanakan. Bagaimana hari biasa ternyata menyimpan sesuatu yang kelak ingin kita kunjungi kembali.
+
+Aku menulismu bukan untuk membekukanmu dalam kalimat, melainkan untuk mengingat bahwa kau pernah ada di sini, hidup dan nyata.
+
+Sesuatu tidak harus abadi agar layak dicintai dengan sepenuh hati.`
+      }
+    ];
+
+    const grid = document.getElementById("poem-grid");
+    const modal = document.getElementById("poem-modal");
+    const modalTitle = document.getElementById("modal-title");
+    const modalBody = document.getElementById("modal-body");
+    const modalTag = document.getElementById("modal-tag");
+
+    poems.forEach((poem, index) => {
+      const card = document.createElement("button");
+      card.className = "card";
+      card.type = "button";
+      card.style.textAlign = "left";
+      card.innerHTML = `<span class="tag">${poem.tag}</span><h3>${poem.title}</h3><p>${poem.excerpt}</p><span class="read">Baca tulisan ↗</span>`;
+      card.addEventListener("click", () => {
+        modalTag.textContent = poem.tag;
+        modalTitle.textContent = poem.title;
+        modalBody.textContent = poem.body;
+        modal.classList.add("open");
+        document.body.style.overflow = "hidden";
+        document.getElementById("modal-close").focus();
+      });
+      grid.appendChild(card);
+    });
+
+    function closeModal() {
+      modal.classList.remove("open");
+      document.body.style.overflow = "";
+    }
+    document.getElementById("modal-close").addEventListener("click", closeModal);
+    modal.addEventListener("click", event => { if (event.target === modal) closeModal(); });
+    document.addEventListener("keydown", event => { if (event.key === "Escape") closeModal(); });
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Musik ambient sintetis tanpa file audio eksternal. Mulai hanya setelah tombol ditekan.
+    let audioContext = null, masterGain = null, oscillators = [], playing = false;
+    const musicButton = document.getElementById("music-toggle");
+    function startAmbient() {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtx) { musicButton.textContent = "Audio tidak didukung browser ini"; return; }
+      audioContext = new AudioCtx();
+      masterGain = audioContext.createGain();
+      masterGain.gain.value = 0.0001;
+      masterGain.connect(audioContext.destination);
+      const notes = [110, 164.81, 220];
+      notes.forEach((frequency, i) => {
+        const osc = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+        osc.type = i === 1 ? "sine" : "triangle";
+        osc.frequency.value = frequency;
+        gain.gain.value = i === 0 ? 0.12 : 0.045;
+        osc.connect(gain); gain.connect(masterGain); osc.start();
+        oscillators.push(osc);
+      });
+      masterGain.gain.setTargetAtTime(0.12, audioContext.currentTime, 1.5);
+      playing = true;
+      musicButton.textContent = "Ⅱ Matikan suasana";
+      musicButton.setAttribute("aria-pressed", "true");
+    }
+    function stopAmbient() {
+      if (audioContext && masterGain) {
+        masterGain.gain.setTargetAtTime(0.0001, audioContext.currentTime, 0.15);
+        setTimeout(() => {
+          oscillators.forEach(o => { try { o.stop(); } catch(e) {} });
+          oscillators = [];
+          if (audioContext) audioContext.close();
+          audioContext = null; masterGain = null;
+        }, 600);
+      }
+      playing = false;
+      musicButton.textContent = "♫ Nyalakan suasana";
+      musicButton.setAttribute("aria-pressed", "false");
+    }
+    musicButton.addEventListener("click", () => {
+      if (playing) stopAmbient(); else startAmbient();
+    });
+  </script>
+</body>
+</html>
